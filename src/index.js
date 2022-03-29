@@ -2,7 +2,8 @@ const yaml = require('yaml')
 const parseArgs = require('minimist')
 const fs = require('fs').promises
 
-const USAGE_TEXT = `Decode Kubernetes secrets (base64)
+const USAGE_TEXT = `
+Kubernetes secrets decode/encode (base64)
 
 DECODE
 
