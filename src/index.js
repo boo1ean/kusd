@@ -17,6 +17,9 @@ cat secrets-encoded.yaml | kusd
 
 ENCODE
 
+Apply to cluster:
+kusd -e secrets.yaml | kubectl apply -f -
+
 Using file arg:
 kusd -e secrets-encoded.yaml
 

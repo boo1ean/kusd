@@ -27,6 +27,11 @@ cat secrets-encoded.yaml | kusd
 
 ## Encode
 
+Apply to cluster
+```
+kusd -e secrets.yaml | kubectl apply -f -
+```
+
 Using file arg
 ```
 kusd -e secrets.yaml
@@ -34,7 +39,7 @@ kusd -e secrets.yaml
 
 Pipe output
 ```
-cat secrets-encoded.yaml | kusd -e
+cat secrets.yaml | kusd -e
 ```
 
 ## License
