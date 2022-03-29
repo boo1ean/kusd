@@ -1,6 +1,6 @@
 # kusd
 
-Decode kubernetes secrets (from base64)
+Kubernetes secrets decode (from base64)
 
 ## Installation
 

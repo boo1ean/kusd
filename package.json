@@ -1,9 +1,11 @@
 {
   "name": "kusd",
-  "version": "1.0.1",
+  "description": "Kubernetes secrets decode",
+  "version": "1.0.2",
   "bin": {
     "kusd": "bin/kusd"
   },
+  "repository": "boo1ean/kusd",
   "dependencies": {
     "yaml": "^1.10.2"
   },
