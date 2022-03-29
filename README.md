@@ -1,6 +1,6 @@
 # kusd
 
-Kubernetes secrets decode (from base64)
+Kubernetes secrets decode/encode (base64)
 
 ## Installation
 
@@ -8,14 +8,14 @@ Kubernetes secrets decode (from base64)
 npm i -g kusd
 ```
 
-## Usage
+## Decode
 
 Directly from cluster
 ```
 kubectl get secret your-secret -o yaml | kusd
 ```
 
-Using file
+Using file arg
 ```
 kusd secrets-encoded.yaml
 ```
@@ -23,6 +23,18 @@ kusd secrets-encoded.yaml
 Pipe output
 ```
 cat secrets-encoded.yaml | kusd
+```
+
+## Encode
+
+Using file arg
+```
+kusd -e secrets.yaml
+```
+
+Pipe output
+```
+cat secrets-encoded.yaml | kusd -e
 ```
 
 ## License

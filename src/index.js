@@ -1,26 +1,35 @@
 const yaml = require('yaml')
+const parseArgs = require('minimist')
 const fs = require('fs').promises
 
 const USAGE_TEXT = `Decode Kubernetes secrets (base64)
 
-USAGE:
+DECODE
 
 Directly from cluster:
 kubectl get secret your-secret -o yaml | kusd
 
-Using file:
+Using file arg:
 kusd secrets-encoded.yaml
 
 Pipe output:
-cat secrets-encoded.yaml | kusd`
+cat secrets-encoded.yaml | kusd
+
+ENCODE
+
+Using file arg:
+kusd -e secrets-encoded.yaml
+
+Pipe output:
+cat secrets-encoded.yaml | kusd -e
+`
+
+const args = parseArgs(process.argv.slice(2), { boolean: ['e'] })
+const filePath = args._[0]
 
 run()
 
 async function run () {
-	console.log(await decode())
-}
-
-async function decode () {
 	const input = await readInput()
 
 	if (!input) {
@@ -29,12 +38,15 @@ async function decode () {
 	}
 
 	const parsedConfig = parseYaml(input)
-	const decodedConfig = decodeConfig(parsedConfig)
-	return objectToYaml(decodedConfig)
+
+	const result = args.e
+		? encode(parsedConfig)
+		: decode(parsedConfig)
+
+	console.log(result)
 }
 
 function readInput () {
-	const filePath = process.argv[2]
 	if (filePath) {
 		return readFile(filePath)
 	}
@@ -61,13 +73,30 @@ function parseYaml (yamlString) {
 	return yaml.parse(yamlString)
 }
 
-function decodeConfig (config) {
+function encode (parsedConfig) {
+	const encodedConfig = encodeConfig(parsedConfig)
+	return objectToYaml(encodedConfig)
+}
+
+function encodeConfig (config) {
 	for (const key in config.data) {
-		config.data[key] = Buffer.from(config.data[key], 'base64').toString('utf8')
+		config.data[key] = Buffer.from(config.data[key], 'utf8').toString('base64')
 	}
 	return config
 }
 
 function objectToYaml (object) {
 	return yaml.stringify(object)
+}
+
+function decode (parsedConfig) {
+	const decodedConfig = decodeConfig(parsedConfig)
+	return objectToYaml(decodedConfig)
+}
+
+function decodeConfig (config) {
+	for (const key in config.data) {
+		config.data[key] = Buffer.from(config.data[key], 'base64').toString('utf8')
+	}
+	return config
 }
