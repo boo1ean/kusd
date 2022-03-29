@@ -1,10 +1,18 @@
 {
   "name": "kusd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "bin": {
     "kusd": "bin/kusd"
   },
   "dependencies": {
     "yaml": "^1.10.2"
-  }
+  },
+  "keywords": [
+    "kubernetes",
+    "kube",
+    "kubectl",
+    "secrets",
+    "decode",
+    "base64"
+  ]
 }
