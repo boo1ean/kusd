@@ -84,7 +84,7 @@ function encode (parsedConfig) {
 
 function encodeConfig (config) {
 	for (const key in config.data) {
-		config.data[key] = Buffer.from(config.data[key], 'utf8').toString('base64')
+		config.data[key] = Buffer.from(String(config.data[key]), 'utf8').toString('base64')
 	}
 	return config
 }
